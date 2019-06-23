@@ -32,6 +32,7 @@
 
 #include "gtest/gtest-death-test.h"
 
+#include <iostream>
 #include <utility>
 
 #include "gtest/internal/gtest-port.h"
@@ -105,7 +106,7 @@ GTEST_DEFINE_string_(
 
 GTEST_DEFINE_bool_(
     death_test_use_fork,
-    internal::BoolFromGTestEnv("death_test_use_fork", false),
+    internal::BoolFromGTestEnv("death_test_use_fork", true),
     "Instructs to use fork()/_exit() instead of clone() in death tests. "
     "Ignored and always uses fork() on POSIX systems where clone() is not "
     "implemented. Useful when running under valgrind or similar tools if "
@@ -1125,7 +1126,7 @@ DeathTest::TestRole NoExecDeathTest::AssumeRole() {
   // there are multiple threads running before the death test, and another
   // thread writes to the log file.
   FlushInfoLog();
-
+  std::cerr << "FORKING FORKING FORKING!!!!" << std::endl;
   const pid_t child_pid = fork();
   GTEST_DEATH_TEST_CHECK_(child_pid != -1);
   set_child_pid(child_pid);
@@ -1373,7 +1374,7 @@ static pid_t ExecDeathTestSpawnChild(char* const* argv, int close_fd) {
     GTEST_DEATH_TEST_CHECK_(
         static_cast<size_t>(stack_size) > kMaxStackAlignment &&
         reinterpret_cast<uintptr_t>(stack_top) % kMaxStackAlignment == 0);
-
+    std::cerr << "USING CLONE CLONE CLONE CLONE" << std::endl;
     child_pid = clone(&ExecDeathTestChildMain, stack_top, SIGCHLD, &args);
 
     GTEST_DEATH_TEST_CHECK_(munmap(stack, stack_size) != -1);
