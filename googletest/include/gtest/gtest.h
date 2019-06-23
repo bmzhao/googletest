@@ -85,6 +85,7 @@ namespace testing {
 
 
 // Declares the flags.
+GTEST_DECLARE_bool_(death_test_use_fork);
 
 // This flag temporary enables the disabled tests.
 GTEST_DECLARE_bool_(also_run_disabled_tests);

@@ -48,7 +48,6 @@ namespace testing {
 // meaning that the child process will execute the test logic immediately
 // after forking.
 GTEST_DECLARE_string_(death_test_style);
-GTEST_DECLARE_bool_(death_test_use_fork);
 
 #if GTEST_HAS_DEATH_TEST
 
